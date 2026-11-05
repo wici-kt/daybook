@@ -570,6 +570,67 @@
     'ics.description': '생일 마일스톤. 출생일은 {n}일째입니다.'
   };
 
+  Object.assign(en, {
+  "share.button": "Create share image",
+  "share.title": "Your days, ready to share",
+  "share.help": "Preview your current result, then download the image.",
+  "share.download": "Download image",
+  "share.close": "Close",
+  "share.loading": "Creating your image…",
+  "share.error": "The image could not be created. Please try again.",
+  "share.saved": "Image downloaded.",
+  "share.lived": "Days lived",
+  "share.next": "My next milestone",
+  "share.none": "More days to celebrate",
+  "share.alt": "{days} days lived. {milestone}. {date}. {countdown}.",
+  "share.note": "1200 × 1500 · Image generated on your device"
+});
+  Object.assign(zhTW, {
+  "share.button": "製作分享圖片",
+  "share.title": "把你的日子分享出去",
+  "share.help": "預覽目前的計算結果，再下載圖片。",
+  "share.download": "下載圖片",
+  "share.close": "關閉",
+  "share.loading": "正在製作圖片…",
+  "share.error": "無法製作圖片，請再試一次。",
+  "share.saved": "圖片已下載。",
+  "share.lived": "已活天數",
+  "share.next": "我的下一個里程碑",
+  "share.none": "還有更多值得慶祝的日子",
+  "share.alt": "已活 {days} 天。{milestone}。{date}。{countdown}。",
+  "share.note": "1200 × 1500 · 圖片在你的裝置上產生"
+});
+  Object.assign(ja, {
+  "share.button": "シェア画像を作成",
+  "share.title": "これまでの日々をシェア",
+  "share.help": "現在の計算結果を確認して、画像をダウンロードできます。",
+  "share.download": "画像をダウンロード",
+  "share.close": "閉じる",
+  "share.loading": "画像を作成しています…",
+  "share.error": "画像を作成できませんでした。もう一度お試しください。",
+  "share.saved": "画像をダウンロードしました。",
+  "share.lived": "生まれてからの日数",
+  "share.next": "次のマイルストーン",
+  "share.none": "これからも記念日は続く",
+  "share.alt": "生まれてから {days} 日。{milestone}。{date}。{countdown}。",
+  "share.note": "1200 × 1500 · 画像は端末内で作成されます"
+});
+  Object.assign(ko, {
+  "share.button": "공유 이미지 만들기",
+  "share.title": "지금까지의 날들을 공유해요",
+  "share.help": "현재 계산 결과를 확인한 뒤 이미지를 다운로드하세요.",
+  "share.download": "이미지 다운로드",
+  "share.close": "닫기",
+  "share.loading": "이미지를 만들고 있어요…",
+  "share.error": "이미지를 만들지 못했어요. 다시 시도해 주세요.",
+  "share.saved": "이미지를 다운로드했어요.",
+  "share.lived": "지금까지 살아온 날",
+  "share.next": "다음 마일스톤",
+  "share.none": "앞으로도 기념할 날은 계속돼요",
+  "share.alt": "지금까지 {days}일. {milestone}. {date}. {countdown}.",
+  "share.note": "1200 × 1500 · 이미지는 이 기기에서 생성됩니다"
+});
+
   const DICT = { en, 'zh-TW': zhTW, ja, ko };
 
   let current = 'en';

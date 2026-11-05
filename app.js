@@ -19,6 +19,7 @@ function milestoneRows(){return numbers().map(n=>{try{return {n,date:D.milestone
 // Applies every static string, then re-renders the live numbers so a language
 // change never touches the inputs, the calculation, or the chosen filters.
 function applyLanguage(){
+  if($('share-dialog').open)$('share-dialog').close();
   $('lang').value=I.lang();
   $('notice').textContent='';
   document.title=I.t('meta.title');
@@ -144,6 +145,49 @@ $('calendar').addEventListener('click',()=>{
   });
   download(content,`daybook-${next.n}-days.ics`,'text/calendar;charset=utf-8');
   announce(I.t('announce.ics'));
+});
+
+let shareBlob, shareUrl, shareFilename, shareGeneration=0;
+function clearShare(){
+  shareGeneration++;
+  if(shareUrl)URL.revokeObjectURL(shareUrl);
+  shareUrl=undefined;shareBlob=undefined;
+  $('share-preview').removeAttribute('src');$('share-preview').hidden=true;
+  $('share-download').disabled=true;
+}
+$('share-close').addEventListener('click',()=>$('share-dialog').close());
+$('share-dialog').addEventListener('close',clearShare);
+$('share').addEventListener('click',async()=>{
+  if(!state||errorState)return;
+  clearShare();
+  const generation=shareGeneration;
+  const data={
+    lang:I.lang(),days:fmt(state.t-state.b),livedLabel:I.t('share.lived'),
+    asOf:I.t('asof',{date:fullDate(state.t)}),nextLabel:I.t('share.next'),
+    milestone:next?milestoneLabel(next.n,state.inclusive):I.t('share.none'),
+    date:next?fullDate(next.date):'',countdown:next?I.t('birthday.away',{n:next.date-state.t}):'',
+    convention:I.t(state.inclusive?'counting.inclusive':'counting.elapsed'),
+    footer:I.t('footer.tagline')
+  };
+  shareFilename=`daybook-${state.t-state.b}-days-${I.lang()}.png`;
+  $('share-error').hidden=true;$('share-status').textContent=I.t('share.loading');
+  $('share-dialog').showModal();
+  try{
+    const blob=await DaybookShare.create(data);
+    if(generation!==shareGeneration||!$('share-dialog').open)return;
+    shareBlob=blob;shareUrl=URL.createObjectURL(blob);
+    $('share-preview').src=shareUrl;
+    $('share-preview').alt=data.date?I.t('share.alt',data):[data.livedLabel,data.days,data.asOf,data.milestone].join(' · ');
+    $('share-preview').hidden=false;$('share-status').textContent='';$('share-download').disabled=false;
+  }catch{
+    if(generation!==shareGeneration)return;
+    $('share-status').textContent='';$('share-error').textContent=I.t('share.error');$('share-error').hidden=false;
+  }
+});
+$('share-download').addEventListener('click',()=>{
+  if(!shareBlob)return;
+  download(shareBlob,shareFilename,'image/png');
+  $('share-status').textContent=I.t('share.saved');
 });
 
 $('asof').value=D.today();$('birth').value='2000-01-01';

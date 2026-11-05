@@ -16,6 +16,7 @@
 
 ## 功能
 
+- 下載分享圖片，顯示已活天數、下一個里程碑與倒數，支援四種語言。
 - 日曆天數、年齡（年／月／天）、整週與整月，以及小時、分鐘、秒的換算。
 - 29 個預設里程碑（包含 100、1,000、10,000 天），可自訂 1 到 1,000,000 天。
 - 兩種計算方式：出生當天為第 0 天（預設）或第 1 天。
@@ -30,45 +31,3 @@
 - 直接開啟線上網站：https://wici-kt.github.io/daybook/
 - 或用瀏覽器開啟這個資料夾裡的 `index.html`。
 - 或在本機啟動：`python3 -m http.server 8080`，再開啟 `http://localhost:8080`。
-
-## 發佈到 GitHub Pages
-
-1. 登入 GitHub，建立一個名為 `daybook` 的**公開**儲存庫。
-2. 選擇 **Add file → Upload files**，把 `index.html`、`style.css`、`calc.js`、`i18n.js`、`exporters.js`、`app.js` 上傳到儲存庫根目錄。若檔案選擇器會顯示隱藏檔案，也一併加入 `.nojekyll`。提交到 `main`。
-3. 開啟 **Settings → Pages**。
-4. 在 **Build and deployment** 選擇 **Deploy from a branch**。
-5. 選擇分支 **main**、資料夾 **/(root)**，按 **Save**。
-6. 等待部署完成。Pages 設定會顯示網站網址，通常是 `https://YOUR-USERNAME.github.io/daybook/`。
-
-若要使用 `https://YOUR-USERNAME.github.io/`（沒有專案路徑），儲存庫請命名為 `YOUR-USERNAME.github.io`。
-
-請上傳這些檔案本身，而不是 ZIP 檔或外層的 `daybook` 資料夾。所有資源路徑都是相對路徑，因此儲存庫網址與根網址都能運作。
-
-官方說明：https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-
-## 天數怎麼算
-
-日期採用延伸格里曆。計算日期必須在生日當天或之後；輸入支援 0001 到 9998 年。
-
-「活了幾天」一律是已過的日曆天數。「出生當天 = 第 1 天」只改變里程碑日期：預設的 100 天里程碑是生日加 100 天，而把出生當天算成第 1 天時，第 100 天是生日加 99 天。
-
-日期運算使用 UTC 日序，避免日光節約時間造成誤差；「今天」取自裝置的當地日曆。時間換算以日曆天數為基礎（每天 24 小時、每小時 60 分鐘、每分鐘 60 秒），不是即時時鐘，也不是從出生時刻起算的實際時間。
-
-2 月 29 日出生的人，在非閏年的生日是 2 月 28 日。整月以原始生日計算，若該月沒有對應日期，則使用該月最後一天。閏日計算包含頭尾兩天。
-
-## 隱私
-
-所有計算都在你的裝置上完成。沒有分析工具、外部字型、帳號或後端。只有你勾選「在這部裝置記住我的生日」時，生日才會存進這個瀏覽器；按「清除我的日期」即可移除。語言偏好會另外儲存。行事曆與 CSV 下載會包含你的里程碑日期，分享前請留意。
-
-## 開發
-
-用 Node.js 執行兩組檢查，不需要安裝任何套件。
-
-```sh
-node tests.cjs
-node tests-i18n.cjs
-```
-
-`tests.cjs` 涵蓋日期運算：閏年、月末日期處理、第 0 天與第 1 天里程碑，以及被拒絕的輸入。`tests-i18n.cjs` 檢查四種語言的字典是否對齊、變數是否一致、是否有未翻譯字串、日期與數字格式、語言判斷順序，以及 CSV 與行事曆輸出。
-
-網站是四支腳本加一份樣式表，沒有建置步驟：`calc.js`（日期運算）、`i18n.js`（字串與格式）、`exporters.js`（CSV／ICS）、`app.js`（介面串接）。

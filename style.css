@@ -2,3 +2,12 @@
 
 #today{flex-shrink:0;white-space:nowrap}
 html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] p{word-break:keep-all;overflow-wrap:break-word}
+
+.share-trigger{margin-top:20px}
+#share-dialog{width:min(540px,calc(100% - 28px));max-height:90dvh;overflow:auto;border:1px solid var(--line);border-radius:14px;padding:24px;background:var(--paper);color:var(--ink)}
+#share-dialog::backdrop{background:rgb(22 32 27 / .65)}
+.share-heading{display:flex;gap:16px;align-items:center;justify-content:space-between}.share-heading h2{font-size:26px}.share-heading button{flex-shrink:0}
+#share-help{font-size:13px;color:var(--muted);margin:10px 0 16px}
+#share-status{font-size:13px}#share-preview{display:block;width:100%;height:auto;border-radius:8px;margin:12px 0}
+#share-download{width:100%;margin-top:14px}#share-dialog .small{margin-top:10px}
+@media print{#share-dialog{display:none!important}}
